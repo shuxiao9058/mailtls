@@ -21,7 +21,9 @@ type Email struct {
 	To      string
 	From    string
 	Subject string
-	Headers []string // additional headers
+	CC      []string
+	BCC     []string
+	Headers []string // headers other than To:, From:, Subject: and CC:
 	Body    io.Reader
 }
 
@@ -74,12 +76,22 @@ func (s *Server) Mail(email *Email) error {
 		return err
 	}
 
-	// Set the sender and recipient first
+	// Set the sender and recipients first
 	if err := c.Mail(email.From); err != nil {
 		return err
 	}
 	if err := c.Rcpt(email.To); err != nil {
 		return err
+	}
+	for _, to := range email.CC {
+		if err := c.Rcpt(to); err != nil {
+			return err
+		}
+	}
+	for _, to := range email.BCC {
+		if err := c.Rcpt(to); err != nil {
+			return err
+		}
 	}
 
 	// Send the email body.
@@ -91,6 +103,12 @@ func (s *Server) Mail(email *Email) error {
 		email.To, email.From, email.Subject)
 	if err != nil {
 		return err
+	}
+	for _, to := range email.CC {
+		_, err = fmt.Fprintf(wc, "CC: %s\r\n", to)
+		if err != nil {
+			return err
+		}
 	}
 	for _, h := range email.Headers {
 		_, err = fmt.Fprintf(wc, "%s\r\n", h)

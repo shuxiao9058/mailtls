@@ -16,13 +16,6 @@ import (
 	"strings"
 )
 
-// Server contains server address and authentication information.
-type Server struct {
-	Address  string // e.g. smtp.example.com:587
-	User     string
-	Password string
-}
-
 // Email contains the information to send in an email
 type Email struct {
 	To      string
@@ -30,6 +23,13 @@ type Email struct {
 	Subject string
 	Headers []string // additional headers
 	Body    io.Reader
+}
+
+// Server contains server address and authentication information.
+type Server struct {
+	Address  string // e.g. smtp.example.com:587
+	User     string
+	Password string
 }
 
 // hostname returns a server address without the port number.
@@ -46,13 +46,13 @@ func hostname(address string) string {
 }
 
 // Mail sends an email using STMP/STARTTLS with SMTP plain
-// authentication. If no port number is given in server.Address, it
+// authentication. If no port number is given in s.Address, it
 // defaults to 587. Mail will refuse to attempt authentication or send
 // an email if TLS encryption to the sending server cannot be
 // established.
-func Mail(email *Email, server *Server) error {
+func (s *Server) Mail(email *Email) error {
 	// Connect to the remote SMTP server.
-	address := server.Address
+	address := s.Address
 	if hostname(address) == address {
 		address += ":587"
 	}
@@ -69,7 +69,7 @@ func Mail(email *Email, server *Server) error {
 
 	// Set up authentication information.
 	plainAuth := smtp.PlainAuth(
-		"", server.User, server.Password, hostname(address))
+		"", s.User, s.Password, hostname(address))
 	if err := c.Auth(plainAuth); err != nil {
 		return err
 	}

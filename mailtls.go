@@ -45,7 +45,7 @@ func hostname(address string) string {
 	return address[:i]
 }
 
-// Mail sends an email using STMP/STARTTLS with STMP plain
+// Mail sends an email using STMP/STARTTLS with SMTP plain
 // authentication. If no port number is given in server.Address, it
 // defaults to 587. Mail will refuse to attempt authentication or send
 // an email if TLS encryption to the sending server cannot be

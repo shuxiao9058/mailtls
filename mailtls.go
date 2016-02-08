@@ -1,4 +1,4 @@
-// Copyright (c) 2015 The Mailtls Authors.
+// Copyright (c) 2016 The Mailtls Authors.
 // Use of this source code is governed by a Expat-style
 // MIT license that can be found in the LICENSE file.
 

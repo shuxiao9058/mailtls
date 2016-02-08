@@ -25,7 +25,7 @@ type Email struct {
 	Body    io.Reader
 }
 
-// Server contains server address and authentication information.
+// Server contains SMTP server address and authentication information.
 type Server struct {
 	Address  string // e.g. smtp.example.com:587
 	User     string

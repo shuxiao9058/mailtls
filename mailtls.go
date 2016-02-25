@@ -14,6 +14,7 @@ import (
 	"io"
 	"net/smtp"
 	"strings"
+	"time"
 )
 
 // Email contains the information to send in an email
@@ -23,7 +24,7 @@ type Email struct {
 	Subject string
 	CC      []string
 	BCC     []string
-	Headers []string // headers other than To:, From:, Subject: and CC:
+	Headers []string // headers other than To:, From:, Subject:, CC: and Date:
 	Body    io.Reader
 }
 
@@ -99,8 +100,9 @@ func (s *Server) Mail(email *Email) error {
 	if err != nil {
 		return err
 	}
-	_, err = fmt.Fprintf(wc, "To: %s\r\nFrom: %s\r\nSubject: %s\r\n",
-		email.To, email.From, email.Subject)
+	_, err = fmt.Fprintf(wc,
+		"To: %s\r\nFrom: %s\r\nSubject: %s\r\nDate: %s\r\n",
+		email.To, email.From, email.Subject, time.Now().Format(time.RFC1123Z))
 	if err != nil {
 		return err
 	}

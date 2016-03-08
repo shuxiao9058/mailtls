@@ -3,7 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 // Package mailtls is used to send emails using SMTP/STARTTLS with
-// SMTP plain authenication.
+// SMTP plain authentication.
 //
 // Note: The API is presently experimental and may change.
 package mailtls

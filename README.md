@@ -1,7 +1,7 @@
 # Mailtls
 
 Package mailtls is used to send emails using SMTP/STARTTLS with SMTP plain
-authenication.
+authentication.
 
 Documentation at <https://godoc.org/xi2.org/x/mailtls>.
 

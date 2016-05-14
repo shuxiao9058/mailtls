@@ -1,5 +1,5 @@
 // Copyright (c) 2016 The Mailtls Authors.
-// Use of this source code is governed by a Expat-style
+// Use of this source code is governed by an Expat-style
 // MIT license that can be found in the LICENSE file.
 
 package mailtls_test
